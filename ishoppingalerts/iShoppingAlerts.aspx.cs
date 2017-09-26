@@ -13,6 +13,7 @@ namespace uxlcorp
     {
         public const Int64 IMEDALERT_INTERVAL = (Int64)(60 * 60 * .73); //2628
         Boolean bShowForm = false;
+        Boolean bDev = false;
 
         public Boolean ShowForm
         {
@@ -20,11 +21,18 @@ namespace uxlcorp
             set { this.bShowForm = value; }
         }
 
+        public Boolean Dev
+        {
+            get { return bDev;  }
+            set { this.bDev = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            Int64 ts, tshash = 0, tmpDiv, tmpMod, tmphash = 0;
+            Int64 ts, tshash = 0, tmpDiv, tmpMod, tmphash = 0, pdev=0;
             Int64.TryParse(Request.Params["ts"] + "", out ts);
             Int64.TryParse(Request.Params["tshash"] + "", out tshash);
+            Int64.TryParse(Request.Params["dev"] + "", out pdev);
             tmpDiv = ts / IMEDALERT_INTERVAL;
             tmpMod = ts % IMEDALERT_INTERVAL;
             Regex r = new Regex(@"(\d.\d*)E(\d*)");
@@ -47,6 +55,7 @@ namespace uxlcorp
                 tmphash = tshash;
             }
             ShowForm = ts != 0 && tmphash != 0 && Math.Abs((tmpDiv + tmpMod) - tmphash) < 10;
+            Dev = (pdev == 1);
             //ShowForm = Request.Params["HTTPS"].ToLower().Equals("on");
             //ShowForm = true;
         }

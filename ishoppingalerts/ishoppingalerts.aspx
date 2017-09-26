@@ -40,6 +40,7 @@
   height: 100%;
   -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
+  overflow-y: scroll;
  }
  .toggle input[type="checkbox"]:checked
  {
@@ -61,7 +62,19 @@
   position: absolute;
   width: 94px;
  }
-
+ ::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
 </style>
 <script src="scripts/templates.js" type="text/javascript"></script>
 <script src="scripts/jquery-1.6.2.min.js" type="text/javascript" charset="UTF-8"></script>
@@ -501,13 +514,14 @@
         });
     }
 
-
+    <%if (!Dev) {%>
     window.onload = function () {
         console.log("ishoppingalerts app loaded...");
         if (location.protocol != 'https:') {
             location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
         }
     }
+    <%}%>
 </script>
 </head>
 
